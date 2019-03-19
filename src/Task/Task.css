@@ -1,0 +1,15 @@
+.Task{
+    border: 3px solid #eee;
+    margin:0px auto;
+    width:20%;
+    box-shadow:0 2px 3px #ccc;
+    text-align:center;
+    padding:15px;
+    margin:16px;
+    display: inline-block;
+}
+.Task:nth-of-type(even){
+    border-bottom:none;
+    /* border-top:none; */
+    /* box-shadow:none; */
+}
