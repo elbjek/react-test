@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
-// import Radium,{StyleRoot} from 'radium';
-import Task from './Task/Task';
-
+import Tasks from '../components/Tasks/Tasks';
+import Cockpit from '../components/Cockpit/cockpit'
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props)
+  }
+  componentWillMount(){
+    console.log("Inside componentWillMount() ");
+    
+  }
+  componentDidMount(){
+    console.log('App did mount');
+  }
   state ={
     tasks:[
       { id:1, name:'Task Name One',date:Date.now()},
@@ -42,69 +52,43 @@ class App extends Component {
       ...this.state.tasks[taskIndex]
     };
     task.name = event.target.value;
+    
     const tasks = [...this.state.tasks];
     tasks[taskIndex] = task;
+    
     this.setState({tasks:tasks}) 
   }
-  // createNewHandler = (event,id) => {
-  //   console.log(event.target.value)
-  // }
-  
-  // addNewHandler =() =>{
-  //   console.log("im working");
-  // }
   render() {
-    const style = {
-      backgroundColor:'salmon',
-      font:'inherit',
-      border:"2px solid pink",
-      padding:'8px 14px',
-      borderRadius:'8px', 
-      cursor:'pointer',
-      // ':hover':{
-      //   backgroundColor:'lightblue',
-      //   color:'white'
-      // }
-    }
+    console.log("render");
+    
+    // const style = {
+    //   backgroundColor:'salmon',
+    //   font:'inherit',
+    //   border:"2px solid pink",
+    //   padding:'8px 14px',
+    //   borderRadius:'8px', 
+    //   cursor:'pointer',
+    // }
     let tasks = null;
     
     if(this.state.showTasks){
       tasks = (
-        <div>
-        {this.state.tasks.map((task, index) => {
-          return <Task 
-          click={() => this.deleteTaskHandler(index)}
-          name={task.name} 
-          date={task.date}
-          key={task.id}
-          changed={(event)=> this.taskChangedHandler(event, task.id)} />
-        })}
-        </div>
-        );
-        style.backgroundColor ='pink';
-        // style[':hover']={
-        //   backgroundColor:'lightred',
-        //   color:'black'
-        // }
+          <Tasks 
+          tasks={this.state.tasks}
+          clicked={this.deleteTaskHandler}
+          changed={this.taskChangedHandler} />);
       } 
-      const classes =[];
-      if(this.state.tasks.length <=2){
-        classes.push('blue');
-      }
-      if(this.state.tasks.length <=1){
-        classes.push('bold');
-      }
+
       return (
-        // <StyleRoot>
+        
         <div className="App">
-        <h1 className={classes.join( )} > My Tasks</h1>
-        <button 
-        style={style}
-        onClick={this.toggleTasksHandler}>Toggle Tasks</button>
+        <Cockpit 
+        title={this.props.title}
+        showTasks={this.state.showTasks}
+        tasks={this.state.tasks}
+        clicked={this.toggleTasksHandler}/>
         {tasks}
-        <button onClick={(event)=> this.addNewHandler()}>Add New</button>
         </div>
-        // </StyleRoot>
         );
         
       }
